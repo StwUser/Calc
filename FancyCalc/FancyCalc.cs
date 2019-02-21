@@ -9,34 +9,61 @@ namespace FancyCalc
     public class FancyCalcEnguine
     {
 
-        public int Add(int a, int b)
+        public double Add(double a, double b)
         {
-            //throw new NotImplementedException();
+            
             return a + b;
         }
 
+        public int Add(int a, int b)
+        {
+
+            return a + b;
+        }
 
         public double Subtract(double a, double b)
         {
-            //throw new NotImplementedException();
+            
             return a - b;
         }
 
+        public int Subtract(int a, int b)
+        {
+
+           return a - b;
+        }
 
         public double Multiply(double a, double b)
         {
+           
+            return a * b;
+        }
+
+        public int Multiply(int a, int b)
+        {
+
             return a * b;
         }
 
         //generic calc method. usage: "10 + 20"  => result 30
         public double Culculate(string expression)
         {
-            string n1 = expression[0].ToString() + expression[1].ToString();
-            string n2 = expression[5].ToString() + expression[6].ToString();
-            string sign = expression[3].ToString();
+            string[] words = expression.Split(' ');
+            string n1 = words[0];
+            string n2 = words[2];
+            string sign = words[1];
 
-            double no = Convert.ToDouble(n1);
-            double nt = Convert.ToDouble(n2);
+
+            bool success = Double.TryParse(n1, out double no);
+            if(!success)
+            {
+                throw new Exception();
+            }
+            success = Double.TryParse(n1, out double nt);
+            if (!success)
+            {
+                throw new Exception();
+            }
 
             if (sign == "+")
             {
@@ -54,9 +81,11 @@ namespace FancyCalc
             {
                 return no * nt;
             }
+            else
+            {
+                throw new Exception(); 
+            }
 
-
-            return 0;
         }
     }
 }
