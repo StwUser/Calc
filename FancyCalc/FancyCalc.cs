@@ -11,39 +11,33 @@ namespace FancyCalc
 
         public double Add(double a, double b)
         {
-            
+            if (Math.Abs((a + b)) > double.MaxValue)
+            {
+                throw new OverflowException();
+            }
             return a + b;
         }
 
-        public int Add(int a, int b)
-        {
-
-            return a + b;
-        }
 
         public double Subtract(double a, double b)
         {
-            
+            if (Math.Abs((a - b)) > double.MaxValue)
+            {
+                throw new OverflowException();
+            }
             return a - b;
         }
 
-        public int Subtract(int a, int b)
-        {
-
-           return a - b;
-        }
 
         public double Multiply(double a, double b)
         {
-           
+            if (Math.Abs((a * b)) > double.MaxValue)
+            {
+                throw new OverflowException();
+            }
             return a * b;
         }
 
-        public int Multiply(int a, int b)
-        {
-
-            return a * b;
-        }
 
         //generic calc method. usage: "10 + 20"  => result 30
         public double Culculate(string expression)
@@ -57,24 +51,40 @@ namespace FancyCalc
             bool success = Double.TryParse(n1, out double no);
             if(!success)
             {
-                throw new Exception();
+                throw new ArgumentException();
             }
             success = Double.TryParse(n1, out double nt);
             if (!success)
             {
-                throw new Exception();
+                throw new ArgumentException();
             }
 
             if (sign == "+")
             {
+                if (Math.Abs((no + nt)) > double.MaxValue)
+                {
+                    throw new OverflowException();
+                }
                 return no + nt;
             }
             else if (sign == "-")
             {
+                if (Math.Abs((no - nt)) > double.MaxValue)
+                {
+                    throw new OverflowException();
+                }
                 return no - nt;
             }
             else if ((sign == "/") && (nt.ToString() != "0"))
             {
+                if (nt == 0)
+                {
+                    throw new DivideByZeroException();
+                }
+                if (Math.Abs((no / nt)) > double.MaxValue)
+                {
+                    throw new OverflowException();
+                }
                 return no / nt;
             }
             else if (sign == "*")
@@ -83,7 +93,7 @@ namespace FancyCalc
             }
             else
             {
-                throw new Exception(); 
+                throw new ArgumentException();
             }
 
         }
